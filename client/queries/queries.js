@@ -5,6 +5,11 @@ const getSongsQuery = gql`
     songs {
       title
       id
+      lyrics {
+        id
+        content
+        likes
+      }
     }
   }
 `;
@@ -30,8 +35,42 @@ const getSongById = gql`
     song(id: $id) {
       id
       title
+      lyrics {
+        id
+        content
+        likes
+      }
     }
   }
 `;
 
-export { getSongsQuery, addSongMutation, deleteSongMutation, getSongById };
+const addLyricMutation = gql`
+  mutation AddLyricToSong($content: String!, $songId: ID!) {
+    addLyricToSong(content: $content, songId: $songId) {
+      id
+      lyrics {
+        id
+        content
+        likes
+      }
+    }
+  }
+`;
+
+const addLikeLyricMutation = gql`
+  mutation LikeLyric($id: ID!) {
+    likeLyric(id: $id) {
+      id
+      likes
+    }
+  }
+`;
+
+export {
+  getSongsQuery,
+  addSongMutation,
+  deleteSongMutation,
+  getSongById,
+  addLyricMutation,
+  addLikeLyricMutation
+};
